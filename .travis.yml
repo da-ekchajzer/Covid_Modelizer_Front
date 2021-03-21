@@ -3,7 +3,7 @@ branches:
   - main
 
 dist: trusty
-sudo: false
+sudo: true
 
 language: node_js
 node_js:
