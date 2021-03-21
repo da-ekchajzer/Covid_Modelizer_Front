@@ -13,11 +13,10 @@ services:
   - docker
 
 addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
 
 cache:
   directories:
