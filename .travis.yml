@@ -1,0 +1,39 @@
+branches:
+  only:
+  - main
+
+dist: trusty
+sudo: false
+
+language: node_js
+node_js:
+  - '8'
+
+services:
+  - docker
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+cache:
+  directories:
+    - ./node_modules
+
+before_install:
+  - cd covid-modelizer-app/src
+
+install:
+  - npm install
+
+script:
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker-compose build
+  - docker tag $IMAGE_NAME:latest
+  - docker push $IMAGE_NAME:latest
